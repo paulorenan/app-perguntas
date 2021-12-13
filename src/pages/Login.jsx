@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useContext} from 'react';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -10,6 +10,8 @@ import { makeStyles } from '@mui/styles';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import perguntas from '../images/perguntas.png';
 import { Grid } from '@mui/material';
+import MyContext from '../context';
+import { useNavigate } from 'react-router';
 
 function Copyright(props) {
   return (
@@ -53,14 +55,14 @@ const theme = createTheme();
 
 export default function Login() {
   const classes = useStyles();
+  const { setUser, setData } = useContext(MyContext);
+  const navigate = useNavigate();
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    setData(data);
+    navigate('/home');
   };
 
   return (
@@ -91,6 +93,7 @@ export default function Login() {
                 name="nome"
                 autoComplete="nome"
                 autoFocus
+                onChange={ (e) => { setUser(e.target.value) } }
               />
               <Button
                 type="submit"

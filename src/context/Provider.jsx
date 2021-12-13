@@ -2,12 +2,15 @@ import React, {useState} from 'react'
 import Context from '.';
 
 function Provider({ children }) {
-  const [nome, setNome] = useState('');
+  const [user, setUser] = useState('Renan');
+  const [data, setData] = useState('');
   
   
   const contextValue = {
-    nome,
-    setNome,
+    user,
+    setUser,
+    data,
+    setData,
   }
 
   return (
