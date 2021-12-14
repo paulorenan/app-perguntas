@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import Header from '../components/Header';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Box } from '@mui/system';
@@ -35,7 +35,8 @@ const useStyles = makeStyles({
 });
 
 function Game() {
-  const { quantidade, setQuestions, start, setStart } = useContext(MyContext);
+  const { quantidade, questions, setQuestions, start, setStart } = useContext(MyContext);
+  const [loading, setLoading] = useState(true);
   const classes = useStyles();
   const theme = createTheme({
     palette: {
@@ -58,11 +59,17 @@ function Game() {
     setStart(false);
   }, [setStart]);
 
+  useEffect(() => {
+    if (questions.length > 0) {
+      setLoading(false);
+    }
+  }, [questions, setLoading]);
+
   return (
     <ThemeProvider theme={theme}>
       <Box className={classes.fullPage}>
         <Header />
-        {start ? <Jogo /> : <Confirmação />}
+        {start ? <Jogo /> : <Confirmação loading={loading}/>}
       </Box>
     </ThemeProvider>
   )

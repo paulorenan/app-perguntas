@@ -2,7 +2,7 @@ import React, {useContext} from 'react';
 import { Box } from '@mui/system';
 import { makeStyles } from '@material-ui/styles';
 import MyContext from '../context';
-import { Button, Container } from '@mui/material';
+import { Button, Container, CssBaseline } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles({
@@ -21,12 +21,13 @@ const useStyles = makeStyles({
   },
 });
 
-function Confirmação() {
+function Confirmação({loading}) {
   const { quantidade, setStart } = useContext(MyContext);
   const navigate = useNavigate();
   const classes = useStyles();
   return (
     <Container maxWidth="sm">
+      <CssBaseline />
       <Box className={classes.card}>
         <h1>Bem vindo ao jogo de Perguntas</h1>
         <p>
@@ -39,6 +40,7 @@ function Confirmação() {
           variant="contained"
           color="primary"
           onClick={() => setStart(true)}
+          disabled={loading}
         >
           Começar
         </Button>

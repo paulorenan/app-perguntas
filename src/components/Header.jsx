@@ -1,9 +1,8 @@
-import React, {useContext} from 'react'
+import React from 'react'
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import MyContext from '../context'
 import perguntas from '../images/perguntas.png'
 import { getUser } from '../services/storage';
 

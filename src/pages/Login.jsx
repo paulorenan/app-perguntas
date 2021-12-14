@@ -63,7 +63,7 @@ export default function Login() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (usuario === '') {
+    if (usuario.trim() === '') {
       setTem(true);
     } else {
       const data = new FormData(event.currentTarget);
