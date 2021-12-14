@@ -6,6 +6,8 @@ import { Button, Container, CssBaseline } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { Grid } from '@mui/material';
 import {decode} from 'html-entities'
+import RightIcon from '@mui/icons-material/Check';
+import WrongIcon from '@mui/icons-material/Clear';
 
 const useStyles = makeStyles({
   card: {
@@ -31,6 +33,7 @@ function Jogo() {
   const [showAnswer, setShowAnswer] = useState(false);
   const [certo, setCerto] = useState(false);
   const [errou, setErrou] = useState(false);
+  const [choose, setChoose] = useState('');
   const navigate = useNavigate();
   const classes = useStyles();
 
@@ -50,7 +53,7 @@ function Jogo() {
 
   function shuffle(array) {
     let currentIndex = array.length,  randomIndex;
-    while (currentIndex != 0) {
+    while (currentIndex !== 0) {
       randomIndex = Math.floor(Math.random() * currentIndex);
       currentIndex--;
       [array[currentIndex], array[randomIndex]] = [
@@ -78,11 +81,14 @@ function Jogo() {
                       setScore(score + 1);
                       setShowAnswer(true);
                       setCerto(true);
+                      setChoose(pergunta);
                     }}
+                    disabled={showAnswer}
                     variant="contained"
                     color="primary"
                     fullWidth
-                    {...(showAnswer && {style: {backgroundColor: '#4caf50'}})}
+                    {...(showAnswer && {style: {backgroundColor: '#4caf50', color: 'black'}})}
+                    {...(showAnswer && choose === pergunta && {startIcon: <RightIcon />})}
                   >
                     {decode(pergunta)}
                   </Button>
@@ -94,11 +100,14 @@ function Jogo() {
                     onClick={() => {
                       setShowAnswer(true);
                       setErrou(true);
+                      setChoose(pergunta);
                     }}
+                    disabled={showAnswer}
                     variant="contained"
                     color="primary"
                     fullWidth
-                    {...(showAnswer && {style: {backgroundColor: '#f44336'}})}
+                    {...(showAnswer && {style: {backgroundColor: '#f44336', color: 'black'}})}
+                    {...(showAnswer && choose === pergunta && {startIcon: <WrongIcon />})}
                   >
                     {decode(pergunta)}
                   </Button>

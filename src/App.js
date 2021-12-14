@@ -7,7 +7,7 @@ import Game from "./pages/Game";
 function App() {
   return (
     <Provider>
-      <BrowserRouter>
+      <BrowserRouter basename={process.env.PUBLIC_URL}>
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/home" element={<Home />} />
