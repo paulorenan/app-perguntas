@@ -4,8 +4,6 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Box } from '@mui/system';
 import { makeStyles } from '@material-ui/styles';
 import MyContext from '../context';
-import { Button, Container } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
 import Confirmação from '../components/Confirmação';
 import { getQuestions } from '../services';
 
@@ -36,8 +34,7 @@ const useStyles = makeStyles({
 });
 
 function Game() {
-  const { quantidade, questions, setQuestions } = useContext(MyContext);
-  const navigate = useNavigate();
+  const { quantidade, setQuestions } = useContext(MyContext);
   const classes = useStyles();
   const theme = createTheme({
     palette: {

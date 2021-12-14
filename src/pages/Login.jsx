@@ -55,7 +55,7 @@ const theme = createTheme();
 
 export default function Login() {
   const classes = useStyles();
-  const { setUser, setData, user } = useContext(MyContext);
+  const { setUser, setData } = useContext(MyContext);
   const [usuario, setUsuario] = useState('');
   const [tem, setTem] = useState(false);
   const navigate = useNavigate();
