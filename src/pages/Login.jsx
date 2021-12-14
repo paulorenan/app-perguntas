@@ -12,6 +12,7 @@ import perguntas from '../images/perguntas.png';
 import { Grid } from '@mui/material';
 import MyContext from '../context';
 import { useNavigate } from 'react-router';
+import { createUser } from '../services/storage';
 
 function Copyright(props) {
   return (
@@ -68,6 +69,7 @@ export default function Login() {
       const data = new FormData(event.currentTarget);
       setData(data);
       setUser(usuario);
+      createUser(usuario);
       navigate('/home');
     }
   };
