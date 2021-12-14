@@ -6,6 +6,7 @@ import { makeStyles } from '@material-ui/styles';
 import MyContext from '../context';
 import Confirmação from '../components/Confirmação';
 import { getQuestions } from '../services';
+import Jogo from '../components/Jogo';
 
 const useStyles = makeStyles({
   fullPage: {
@@ -34,7 +35,7 @@ const useStyles = makeStyles({
 });
 
 function Game() {
-  const { quantidade, setQuestions } = useContext(MyContext);
+  const { quantidade, setQuestions, start, setStart } = useContext(MyContext);
   const classes = useStyles();
   const theme = createTheme({
     palette: {
@@ -53,11 +54,15 @@ function Game() {
     });
   }, [quantidade, setQuestions]);
 
+  useEffect(() => {
+    setStart(false);
+  }, [setStart]);
+
   return (
     <ThemeProvider theme={theme}>
       <Box className={classes.fullPage}>
         <Header />
-        <Confirmação />
+        {start ? <Jogo /> : <Confirmação />}
       </Box>
     </ThemeProvider>
   )

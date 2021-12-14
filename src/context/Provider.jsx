@@ -6,6 +6,7 @@ function Provider({ children }) {
   const [data, setData] = useState('');
   const [quantidade, setQuantidade] = useState(1);
   const [questions, setQuestions] = useState([]);
+  const [start, setStart] = useState(false);
   
   
   const contextValue = {
@@ -17,6 +18,8 @@ function Provider({ children }) {
     setQuantidade,
     questions,
     setQuestions,
+    start,
+    setStart,
   }
 
   return (
