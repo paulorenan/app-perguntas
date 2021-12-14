@@ -4,10 +4,9 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Box } from '@mui/system';
 import { makeStyles } from '@material-ui/styles';
 import MyContext from '../context';
-import { Button, Container } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
 import Confirmação from '../components/Confirmação';
 import { getQuestions } from '../services';
+import Jogo from '../components/Jogo';
 
 const useStyles = makeStyles({
   fullPage: {
@@ -36,8 +35,7 @@ const useStyles = makeStyles({
 });
 
 function Game() {
-  const { quantidade, questions, setQuestions } = useContext(MyContext);
-  const navigate = useNavigate();
+  const { quantidade, setQuestions, start, setStart } = useContext(MyContext);
   const classes = useStyles();
   const theme = createTheme({
     palette: {
@@ -56,11 +54,15 @@ function Game() {
     });
   }, [quantidade, setQuestions]);
 
+  useEffect(() => {
+    setStart(false);
+  }, [setStart]);
+
   return (
     <ThemeProvider theme={theme}>
       <Box className={classes.fullPage}>
         <Header />
-        <Confirmação />
+        {start ? <Jogo /> : <Confirmação />}
       </Box>
     </ThemeProvider>
   )

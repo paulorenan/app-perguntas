@@ -1,6 +1,4 @@
-import React, {useContext} from 'react'
-import Header from '../components/Header';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import React, {useContext} from 'react';
 import { Box } from '@mui/system';
 import { makeStyles } from '@material-ui/styles';
 import MyContext from '../context';
@@ -24,7 +22,7 @@ const useStyles = makeStyles({
 });
 
 function Confirmação() {
-  const { quantidade } = useContext(MyContext);
+  const { quantidade, setStart } = useContext(MyContext);
   const navigate = useNavigate();
   const classes = useStyles();
   return (
@@ -40,7 +38,7 @@ function Confirmação() {
         <Button
           variant="contained"
           color="primary"
-          onClick={() => navigate('/perguntas')}
+          onClick={() => setStart(true)}
         >
           Começar
         </Button>
