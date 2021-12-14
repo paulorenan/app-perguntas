@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useContext, useState} from 'react'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Box } from '@mui/system';
 import { makeStyles } from '@material-ui/styles';
@@ -6,6 +6,8 @@ import Header from '../components/Header';
 import { Container, CssBaseline } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import MyContext from '../context';
+import { useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles({
   fullPage: {
@@ -24,7 +26,7 @@ const useStyles = makeStyles({
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
-    maxWidth: '450px',
+    maxWidth: '550px',
     margin: 'auto',
     backgroundColor: '#fff',
     padding: '20px',
@@ -34,7 +36,11 @@ const useStyles = makeStyles({
 });
 
 function Home() {
+  const { setQuantidade, quantidade } = useContext(MyContext);
+  const [max, setMax] = useState(false);
+  const [min, setMin] = useState(false);
   const classes = useStyles();
+  const navigate = useNavigate();
   const theme = createTheme({
     palette: {
       primary: {
@@ -46,6 +52,19 @@ function Home() {
     },
   });
 
+  const onClick = () => {
+    setMax(false);
+    setMin(false);
+    if (quantidade > 40) {
+      setMax(true);
+    } else if (quantidade < 1) {
+      setMin(true);
+    } else {
+      navigate('/game');
+    }
+  }
+
+
   return (
     <ThemeProvider theme={theme}>
       <Box className={classes.fullPage}>
@@ -53,16 +72,26 @@ function Home() {
         <Container maxWidth="sm">
           <CssBaseline />
           <Box className={classes.card}>
-            <h1>Selecione a quantidade de perguntas</h1>
+            <h1>Bem vindo ao jogo de Perguntas</h1>
+            <h2>Selecione a quantidade de perguntas</h2>
             <TextField
               id="outlined-number"
               label="Quantidade"
               type="number"
+              min="1"
+              max="40"
               InputLabelProps={{
                 shrink: true,
               }}
+              onChange={(e) => setQuantidade(e.target.value)}
             />
-            <Button variant="contained" color="primary" style={{marginTop: '20px'}}>
+            {max && <p style={{color: 'red'}}>Quantidade máxima é 40</p>}
+            {min && <p style={{color: 'red'}}>Quantidade mínima é 1</p>}
+            <Button 
+              variant="contained"
+              color="primary"
+              style={{marginTop: '20px'}}
+              onClick={onClick}>
               Continuar
             </Button>
             </Box>

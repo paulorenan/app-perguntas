@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -55,14 +55,21 @@ const theme = createTheme();
 
 export default function Login() {
   const classes = useStyles();
-  const { setUser, setData } = useContext(MyContext);
+  const { setUser, setData, user } = useContext(MyContext);
+  const [usuario, setUsuario] = useState('');
+  const [tem, setTem] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    setData(data);
-    navigate('/home');
+    if (usuario === '') {
+      setTem(true);
+    } else {
+      const data = new FormData(event.currentTarget);
+      setData(data);
+      setUser(usuario);
+      navigate('/home');
+    }
   };
 
   return (
@@ -93,8 +100,9 @@ export default function Login() {
                 name="nome"
                 autoComplete="nome"
                 autoFocus
-                onChange={ (e) => { setUser(e.target.value) } }
+                onChange={ (e) => { setUsuario(e.target.value) } }
               />
+              {tem && <p style={{ color: 'red' }}>Preencha o campo nome</p>}
               <Button
                 type="submit"
                 fullWidth
