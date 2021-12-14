@@ -29,6 +29,8 @@ function Jogo() {
   const [perguntas, setPerguntas] = useState([]);
   const [score, setScore] = useState(0);
   const [showAnswer, setShowAnswer] = useState(false);
+  const [certo, setCerto] = useState(false);
+  const [errou, setErrou] = useState(false);
   const navigate = useNavigate();
   const classes = useStyles();
 
@@ -39,6 +41,9 @@ function Jogo() {
 
   function proximaPergunta() {
     if (currentQuestion < questions.length - 1) {
+      setShowAnswer(false);
+      setCerto(false);
+      setErrou(false);
       setCurrentQuestion(currentQuestion + 1);
     }
   }
@@ -61,21 +66,49 @@ function Jogo() {
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <Box className={classes.card}>
+            <h3>{`Score: ${score}/${questions.length}`}</h3>
             <h1>{`Pergunta ${currentQuestion +1} de ${questions.length}`}</h1>
             <p>{decode(questions[currentQuestion].question)}</p>
-            {perguntas.map((pergunta, index) => (
-              <Button
-                key={index}
-                onClick={() => {
-                  if (pergunta === questions[currentQuestion].correct_answer) {
-                    setScore(score + 1);
-                  }
-                  setShowAnswer(true);
-                }}
-              >
-                {decode(pergunta)}
-              </Button>
-            ))}
+            {perguntas.map((pergunta, index) => {
+              if(pergunta === questions[currentQuestion].correct_answer) {
+                return (
+                  <Button
+                    key={index}
+                    onClick={() => {
+                      setScore(score + 1);
+                      setShowAnswer(true);
+                      setCerto(true);
+                    }}
+                    variant="contained"
+                    color="primary"
+                    fullWidth
+                    {...(showAnswer && {style: {backgroundColor: '#4caf50'}})}
+                  >
+                    {decode(pergunta)}
+                  </Button>
+                )
+              } else {
+                return (
+                  <Button
+                    key={index}
+                    onClick={() => {
+                      setShowAnswer(true);
+                      setErrou(true);
+                    }}
+                    variant="contained"
+                    color="primary"
+                    fullWidth
+                    {...(showAnswer && {style: {backgroundColor: '#f44336'}})}
+                  >
+                    {decode(pergunta)}
+                  </Button>
+                )
+              }
+              }
+            )}
+            {showAnswer && certo && <p>Resposta correta!</p>}
+            {showAnswer && errou && <p>Resposta errada!</p>}
+            {showAnswer && <Button onClick={proximaPergunta} variant='contained'>Próxima pergunta</Button>}
           </Box>
         </Grid>
       </Grid>
