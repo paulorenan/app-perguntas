@@ -12,7 +12,7 @@ const useStyles = makeStyles({
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
-    maxWidth: '550px',
+    maxWidth: '500px',
     margin: 'auto',
     backgroundColor: '#fff',
     padding: '20px',
@@ -38,10 +38,7 @@ function Confirmação({loading}) {
     <Container maxWidth="sm">
       <CssBaseline />
       <Box className={classes.card}>
-        <h1>Bem vindo ao jogo de Perguntas</h1>
-        <p>
-          Você tem {quantidade} {quantidade > 1 ? 'perguntas' : 'pergunta'} para responder.
-        </p>
+        <h2 style={{marginBottom: '0'}}>Você escolheu responder {quantidade} {quantidade > 1 ? 'perguntas' : 'pergunta'}</h2>
         <p>
           Clique no botão abaixo para começar.
         </p>

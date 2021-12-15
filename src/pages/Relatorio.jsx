@@ -7,7 +7,8 @@ import { getRelatorio } from '../services/storage';
 import {decode} from 'html-entities'
 import { CssBaseline, Button, Grid } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-
+import RightIcon from '@mui/icons-material/Check';
+import WrongIcon from '@mui/icons-material/Clear';
 
 const useStyles = makeStyles({
   fullPage: {
@@ -92,7 +93,7 @@ function Relatorio() {
         : 
         <>
           <Box className={classes.cardRelatorio}>
-            <h1>Relatório</h1>
+            <h1 style={{marginBottom: '0'}}>Relatório</h1>
             <p>Voce acertou {score} de {perguntas.length} {perguntas.length > 1 ? 'perguntas' : 'pergunta'}.</p>
           </Box>
           <Grid container spacing={2} className={classes.grid}>
@@ -113,7 +114,7 @@ function Relatorio() {
                     color="primary"
                     fullWidth
                     style={{marginBottom: '10px', backgroundColor: '#4caf50', color: 'black' }}
-                    // {...(showAnswer && choose === pergunta && {startIcon: <RightIcon />})}
+                    startIcon={alt === pergunta.resposta && <RightIcon />}
                   >
                     {decode(alt)}
                   </Button>
@@ -127,7 +128,7 @@ function Relatorio() {
                     color="primary"
                     fullWidth
                     style={{marginBottom: '10px', backgroundColor: '#f44336', color: 'black',}}
-                    // {...(showAnswer && choose === pergunta && {startIcon: <WrongIcon />})}
+                    startIcon={alt === pergunta.resposta && <WrongIcon />}
                   >
                     {decode(alt)}
                   </Button>

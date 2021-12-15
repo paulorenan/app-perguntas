@@ -8,7 +8,6 @@ import { Grid } from '@mui/material';
 import {decode} from 'html-entities'
 import RightIcon from '@mui/icons-material/Check';
 import WrongIcon from '@mui/icons-material/Clear';
-import { createRelatorio } from '../services/storage';
 
 const useStyles = makeStyles({
   card: {
