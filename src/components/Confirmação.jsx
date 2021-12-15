@@ -40,7 +40,7 @@ function Confirmação({loading}) {
       <Box className={classes.card}>
         <h1>Bem vindo ao jogo de Perguntas</h1>
         <p>
-          Você tem {quantidade} perguntas para responder.
+          Você tem {quantidade} {quantidade > 1 ? 'perguntas' : 'pergunta'} para responder.
         </p>
         <p>
           Clique no botão abaixo para começar.

@@ -5,13 +5,14 @@ import { Box } from '@mui/system';
 import { makeStyles } from '@material-ui/styles';
 import { getRelatorio } from '../services/storage';
 import {decode} from 'html-entities'
-import { CssBaseline, Button } from '@mui/material';
+import { CssBaseline, Button, Grid } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+
 
 const useStyles = makeStyles({
   fullPage: {
     height: 'auto',
-    width: '100vw',
+    width: '100%',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -22,27 +23,31 @@ const useStyles = makeStyles({
   card: {
     display: 'flex',
     flexDirection: 'column',
-    // alignItems: 'center',
-    // justifyContent: 'center',
-    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
     maxWidth: '550px',
     margin: 'auto',
     backgroundColor: '#fff',
     padding: '20px',
     borderRadius: '10px',
     boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
-    marginTop: '90px',
   },
-  full: {
-    height: '100vh',
-    width: '100vw',
+  grid: {
+    padding: '20px',
+  },
+  cardRelatorio: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundImage: 'linear-gradient(to right, #f6d365, #fda085)',
-    paddingTop: '0',
-  }
+    maxWidth: '550px',
+    margin: 'auto',
+    backgroundColor: '#fff',
+    padding: '20px',
+    borderRadius: '10px',
+    boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
+    marginTop: '85px',
+  },
 });
 
 function Relatorio() {
@@ -74,33 +79,71 @@ function Relatorio() {
 
   return (
     <ThemeProvider theme={theme}>
+      <CssBaseline />
       <Box className={classes.fullPage}>
         <Header />
-        <CssBaseline />
         {perguntas.length === 0 ? 
-        <Box className={classes.full}>
-          <Box className={classes.card}>
+          <Box className={classes.cardRelatorio}>
             <h1>Não tem Relatório</h1>
             <Button variant="contained" color="primary" onClick={() => navigate('/home')}>
               Voltar
             </Button>
           </Box>
-        </Box>
         : 
-        <Box className={classes.card}>
-          <h1>Relatorio</h1>
-          <h2>Pontuação: {score} de {perguntas.length}</h2>
-          {perguntas.map((pergunta, index) => {
-            return (
-              <Box key={index}>
-                <h1>Pergunta {index + 1} de {perguntas.length}</h1>
-                <h3>{decode(pergunta.pergunta)}</h3>
-                <h4>{decode(pergunta.resposta)}</h4>
-              </Box>
-            )
-          }
-          )}                
-        </Box>} 
+        <>
+          <Box className={classes.cardRelatorio}>
+            <h1>Relatório</h1>
+            <p>Voce acertou {score} de {perguntas.length} {perguntas.length > 1 ? 'perguntas' : 'pergunta'}.</p>
+          </Box>
+          <Grid container spacing={2} className={classes.grid}>
+          <CssBaseline />
+            {perguntas.map((pergunta, index) => (
+              <Grid item xs={12} lg={4} md={4} sm={6} key={index}>
+                <CssBaseline />
+                <Box className={classes.card}>
+                  <h1>Pergunta {index + 1} de {perguntas.length}</h1>
+                  <p>{decode(pergunta.pergunta)}</p>
+                  {pergunta.alternativa.map((alt, index) => {
+              if(alt === pergunta.correta) {
+                return (
+                  <Button
+                    key={index}
+                    disabled='true'
+                    variant="contained"
+                    color="primary"
+                    fullWidth
+                    style={{marginBottom: '10px', backgroundColor: '#4caf50', color: 'black' }}
+                    // {...(showAnswer && choose === pergunta && {startIcon: <RightIcon />})}
+                  >
+                    {decode(alt)}
+                  </Button>
+                )
+              } else {
+                return (
+                  <Button
+                    key={index}
+                    disabled='true'
+                    variant="contained"
+                    color="primary"
+                    fullWidth
+                    style={{marginBottom: '10px', backgroundColor: '#f44336', color: 'black',}}
+                    // {...(showAnswer && choose === pergunta && {startIcon: <WrongIcon />})}
+                  >
+                    {decode(alt)}
+                  </Button>
+                )
+              }
+              }
+            )}
+                </Box>
+              </Grid>
+            ))}
+          </Grid>
+          <Button variant="contained" color="primary" onClick={() => navigate('/home')} style={{marginBottom: '30px'}}>
+            Voltar
+          </Button>
+        </>
+        }
       </Box>
     </ThemeProvider>
   )

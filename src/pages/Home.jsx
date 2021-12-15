@@ -3,11 +3,12 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Box } from '@mui/system';
 import { makeStyles } from '@material-ui/styles';
 import Header from '../components/Header';
-import { Container, CssBaseline } from '@mui/material';
+import { Container, CssBaseline, Typography } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import MyContext from '../context';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles({
   fullPage: {
@@ -33,10 +34,14 @@ const useStyles = makeStyles({
     borderRadius: '10px',
     boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
   },
+  link: {
+    color: 'black',
+    marginTop: '10px',
+  },
 });
 
 function Home() {
-  const { setQuantidade, quantidade } = useContext(MyContext);
+  const { setQuantidade, quantidade, storage } = useContext(MyContext);
   const [max, setMax] = useState(false);
   const [min, setMin] = useState(false);
   const classes = useStyles();
@@ -94,6 +99,11 @@ function Home() {
               onClick={onClick}>
               Continuar
             </Button>
+            {storage.length > 0 && <Typography ariant="body2" color="text.secondary" align="center" style={{marginTop: '20px'}}>
+              <Link to="/relatorio" className={classes.link}>
+                Ver relatório anterior.
+              </Link>
+              </Typography>}
             </Box>
         </Container>
       </Box>
