@@ -1,5 +1,6 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import Context from '.';
+import { createRelatorio } from '../services/storage';
 
 function Provider({ children }) {
   const [user, setUser] = useState('Usuário');
@@ -7,6 +8,12 @@ function Provider({ children }) {
   const [quantidade, setQuantidade] = useState(1);
   const [questions, setQuestions] = useState([]);
   const [start, setStart] = useState(false);
+  const [storage, setStorage] = useState([]);
+
+  useEffect(() => {
+    createRelatorio(storage);
+  }, [storage]);
+
   
   
   const contextValue = {
@@ -20,6 +27,8 @@ function Provider({ children }) {
     setQuestions,
     start,
     setStart,
+    storage,
+    setStorage,
   }
 
   return (

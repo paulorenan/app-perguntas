@@ -8,6 +8,7 @@ import { Grid } from '@mui/material';
 import {decode} from 'html-entities'
 import RightIcon from '@mui/icons-material/Check';
 import WrongIcon from '@mui/icons-material/Clear';
+import { createRelatorio } from '../services/storage';
 
 const useStyles = makeStyles({
   card: {
@@ -26,7 +27,7 @@ const useStyles = makeStyles({
 });
 
 function Jogo() {
-  const { questions } = useContext(MyContext);
+  const { questions, storage, setStorage } = useContext(MyContext);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [perguntas, setPerguntas] = useState([]);
   const [score, setScore] = useState(0);
@@ -42,12 +43,22 @@ function Jogo() {
     setPerguntas(shuffle(array));
   }, [currentQuestion, questions]);
 
-  function proximaPergunta() {
+  async function proximaPergunta() {
+    await setStorage([...storage, {
+      pergunta: questions[currentQuestion].question,
+      resposta: choose,
+      correta: questions[currentQuestion].correct_answer,
+      alternativa: [...perguntas],
+      respostaCorreta: questions[currentQuestion].correct_answer === choose ? true : false
+    }]);
     if (currentQuestion < questions.length - 1) {
       setShowAnswer(false);
       setCerto(false);
       setErrou(false);
       setCurrentQuestion(currentQuestion + 1);
+    } else {
+      localStorage.setItem('score', score);
+      navigate('/relatorio');
     }
   }
 
@@ -69,8 +80,8 @@ function Jogo() {
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <Box className={classes.card}>
-            <h3>{`Score: ${score}/${questions.length}`}</h3>
-            <h1>{`Pergunta ${currentQuestion +1} de ${questions.length}`}</h1>
+            <h3 style={{marginBottom: '0', marginTop: '10px'}}>{`Score: ${score}/${questions.length}`}</h3>
+            <h1 style={{marginBottom: '0'}}>{`Pergunta ${currentQuestion +1} de ${questions.length}`}</h1>
             <p>{decode(questions[currentQuestion].question)}</p>
             {perguntas.map((pergunta, index) => {
               if(pergunta === questions[currentQuestion].correct_answer) {
@@ -87,7 +98,8 @@ function Jogo() {
                     variant="contained"
                     color="primary"
                     fullWidth
-                    {...(showAnswer && {style: {backgroundColor: '#4caf50', color: 'black'}})}
+                    style={{marginBottom: '10px'}}
+                    {...(showAnswer && {style: {backgroundColor: '#4caf50', color: 'black', marginBottom: '10px'}})}
                     {...(showAnswer && choose === pergunta && {startIcon: <RightIcon />})}
                   >
                     {decode(pergunta)}
@@ -106,7 +118,8 @@ function Jogo() {
                     variant="contained"
                     color="primary"
                     fullWidth
-                    {...(showAnswer && {style: {backgroundColor: '#f44336', color: 'black'}})}
+                    style={{marginBottom: '10px'}}
+                    {...(showAnswer && {style: {backgroundColor: '#f44336', color: 'black', marginBottom: '10px'}})}
                     {...(showAnswer && choose === pergunta && {startIcon: <WrongIcon />})}
                   >
                     {decode(pergunta)}
@@ -115,9 +128,9 @@ function Jogo() {
               }
               }
             )}
-            {showAnswer && certo && <p>Resposta correta!</p>}
-            {showAnswer && errou && <p>Resposta errada!</p>}
-            {showAnswer && <Button onClick={proximaPergunta} variant='contained'>Próxima pergunta</Button>}
+            {showAnswer && certo && <p style={{marginTop: '0'}}>Resposta correta!</p>}
+            {showAnswer && errou && <p style={{marginTop: '0'}}>Resposta errada!</p>}
+            {showAnswer && <Button onClick={proximaPergunta} variant='contained'>{currentQuestion === questions.length -1 ? 'Ver Relatório' : 'Próxima Pergunta'}</Button>}
           </Box>
         </Grid>
       </Grid>

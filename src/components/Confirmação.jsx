@@ -21,6 +21,15 @@ const useStyles = makeStyles({
   },
 });
 
+// function to get the date in the format DD--MM--YYYY
+function getDate() {
+  const date = new Date();
+  const day = date.getDate();
+  const month = date.getMonth() + 1;
+  const year = date.getFullYear();
+  return `${day}/${month}/${year}`;
+}
+
 function Confirmação({loading}) {
   const { quantidade, setStart } = useContext(MyContext);
   const navigate = useNavigate();
