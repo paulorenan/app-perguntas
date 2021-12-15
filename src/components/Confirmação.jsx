@@ -31,7 +31,7 @@ function getDate() {
 }
 
 function Confirmação({loading}) {
-  const { quantidade, setStart } = useContext(MyContext);
+  const { quantidade, setStart, setStorage } = useContext(MyContext);
   const navigate = useNavigate();
   const classes = useStyles();
   return (
@@ -45,7 +45,7 @@ function Confirmação({loading}) {
         <Button
           variant="contained"
           color="primary"
-          onClick={() => setStart(true)}
+          onClick={() => {setStorage([]);setStart(true)}}
           disabled={loading}
         >
           Começar

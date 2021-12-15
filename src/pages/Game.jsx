@@ -35,7 +35,7 @@ const useStyles = makeStyles({
 });
 
 function Game() {
-  const { quantidade, questions, setQuestions, start, setStart, setStorage } = useContext(MyContext);
+  const { quantidade, questions, setQuestions, start, setStart} = useContext(MyContext);
   const [loading, setLoading] = useState(true);
   const classes = useStyles();
   const theme = createTheme({
@@ -64,10 +64,6 @@ function Game() {
       setLoading(false);
     }
   }, [questions, setLoading]);
-
-  useEffect(() => {
-    setStorage([]);
-  }, [setStorage]);
 
   return (
     <ThemeProvider theme={theme}>
