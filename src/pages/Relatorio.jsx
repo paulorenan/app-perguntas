@@ -12,6 +12,7 @@ import WrongIcon from '@mui/icons-material/Clear';
 
 const useStyles = makeStyles({
   fullPage: {
+    minHeight: '100vh',
     height: 'auto',
     width: '100%',
     display: 'flex',
