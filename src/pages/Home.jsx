@@ -9,6 +9,7 @@ import Button from '@mui/material/Button';
 import MyContext from '../context';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import { getRelatorio } from '../services/storage';
 
 const useStyles = makeStyles({
   fullPage: {
@@ -44,6 +45,7 @@ function Home() {
   const { setQuantidade, quantidade, storage } = useContext(MyContext);
   const [max, setMax] = useState(false);
   const [min, setMin] = useState(false);
+  const relatorio = getRelatorio();
   const classes = useStyles();
   const navigate = useNavigate();
   const theme = createTheme({
@@ -99,7 +101,7 @@ function Home() {
               onClick={onClick}>
               Continuar
             </Button>
-            {storage.length > 0 && <Typography ariant="body2" color="text.secondary" align="center" style={{marginTop: '20px'}}>
+            {(relatorio !== null && relatorio.length > 0) && <Typography ariant="body2" color="text.secondary" align="center" style={{marginTop: '20px'}}>
               <Link to="/relatorio" className={classes.link}>
                 Ver relatório anterior.
               </Link>

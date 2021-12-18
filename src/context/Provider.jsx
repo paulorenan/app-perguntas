@@ -11,7 +11,9 @@ function Provider({ children }) {
   const [storage, setStorage] = useState([]);
 
   useEffect(() => {
-    createRelatorio(storage);
+    if(storage.length > 0) {
+      createRelatorio(storage);
+    }
   }, [storage]);
 
   
