@@ -8,7 +8,7 @@ import Relatorio from "./pages/Relatorio";
 function App() {
   return (
     <Provider>
-      <BrowserRouter basename={process.env.PUBLIC_URL}>
+      <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/home" element={<Home />} />
