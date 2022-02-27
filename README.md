@@ -1,7 +1,7 @@
 
 # App Perguntas
 
-Um Website de quizz de perguntas..
+Um Website de quizz de perguntas.
 
 
 ## WebSite
