@@ -5,7 +5,7 @@ Um Website de quizz de perguntas.
 
 
 ## WebSite
-[App Perguntas](https://vue2dolist.herokuapp.com/)
+[App Perguntas](https://app-perguntas-2.herokuapp.com/)
 ## Stack utilizada
 
 **Front-end:** ReactJs, Material-UI
