@@ -5,7 +5,7 @@ Um Website de quizz de perguntas.
 
 
 ## WebSite
-[App Perguntas](https://app-perguntas-2.herokuapp.com/)
+[App Perguntas](https://app-perguntas.vercel.app/)
 ## Stack utilizada
 
 **Front-end:** ReactJs, Material-UI
